@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Layout from "../core/Layout";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link } from "react-router-dom";
 import { signup } from "../auth";
 
 const Signup = () => {
@@ -26,14 +26,13 @@ const Signup = () => {
   }
 
   // Grab the value for sending to the api
-  const { name, email, password, success } = values;
+  const { name, email, password, success, errors } = values;
 
   // Submit the form
   const formSubmit = (e) => {
     e.preventDefault();
     signup({ name, email, password })
       .then(data => {
-        console.log(data);
         if (data.error) {
           const errorResponse = data.error;
           setValues({
@@ -42,6 +41,18 @@ const Signup = () => {
               name: errorResponse.name || '',
               email: errorResponse.email || '',
               password: errorResponse.password || '',
+            },
+            success: false,
+          });
+        } else if (!data.success) {
+          const errorResponse = data.message;
+          setValues({
+            ...values,
+            name: '',
+            email: '',
+            password: '',
+            errors: {
+              name: errorResponse,
             },
             success: false,
           });
@@ -79,7 +90,7 @@ const Signup = () => {
           id="exampleInputName"
           placeholder="Enter name"
         />
-        <span className="text-danger">{values.errors.name}</span>
+        <span className="text-danger">{errors.name}</span>
       </div>
       <div className="form-group">
         <label htmlFor="exampleInputEmail1">Email address</label>
@@ -92,7 +103,7 @@ const Signup = () => {
           aria-describedby="emailHelp"
           placeholder="Enter email"
         />
-        <span className="text-danger">{values.errors.email}</span>
+        <span className="text-danger">{errors.email}</span>
         <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
       </div>
       <div className="form-group">
@@ -105,7 +116,7 @@ const Signup = () => {
           id="exampleInputPassword1"
           placeholder="Password"
         />
-        <span className="text-danger">{values.errors.password}</span>
+        <span className="text-danger">{errors.password}</span>
       </div>
 
       <button type="submit" onClick={formSubmit} className="btn btn-primary">Submit</button>
