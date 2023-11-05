@@ -5,8 +5,8 @@ import { signin, authenticate } from "../auth";
 
 const Signin = () => {
   const [values, setValues] = useState({
-    email: '',
-    password: '',
+    email: 'bugokokydo@mailinator.com',
+    password: 'Pa$$w0rd!',
     errors: {
       email: '',
       password: '',
@@ -80,7 +80,7 @@ const Signin = () => {
       setValues({ ...values, loading: false });
     });
   }
-  
+
   // Form
   const signinForm = () => (
     <form>
