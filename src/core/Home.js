@@ -1,4 +1,10 @@
 import React from "react";
-const Home = () => (<div>Home From React</div>);
+import Layout from "./Layout";
+
+const Home = () => (
+  <Layout title="Home Page" description="Laravel React E-commerce App">
+    ...
+  </Layout>
+);
 
 export default Home;

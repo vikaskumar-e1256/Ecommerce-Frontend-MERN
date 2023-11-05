@@ -1,4 +1,10 @@
 import React from "react";
-const Signin = () => (<div>Signin From React</div>);
+import Layout from "../core/Layout";
+
+const Signin = () => (
+  <Layout title="Signin Page" description="Laravel React E-commerce App">
+    ...
+  </Layout>
+);
 
 export default Signin;
