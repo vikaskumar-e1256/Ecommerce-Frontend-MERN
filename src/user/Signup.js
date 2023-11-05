@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Layout from "../core/Layout";
-import { API } from "../config";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { signup } from "../auth";
 
 const Signup = () => {
   const [values, setValues] = useState({
@@ -27,25 +27,6 @@ const Signup = () => {
 
   // Grab the value for sending to the api
   const { name, email, password, success } = values;
-
-  // API Call
-  const signup = (userObj) => {
-    return fetch(`${API}/signup`, {
-        method: "POST",
-        headers: {
-          Accept: 'application/json',
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(userObj)
-      })
-      .then((response) => {
-        return response.json();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
 
   // Submit the form
   const formSubmit = (e) => {
