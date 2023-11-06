@@ -124,20 +124,25 @@ const Signin = () => {
       </button>
     </div>
   );
-  if (redirectToReferrer) {
+  const redirectUser = () => {
     // check user is authenticated
-    const authenticated = isAuthenticated();
-    const { role } = isAuthenticated();
-    if (authenticated && role === "admin") {
-      return <Redirect to="/admin/dashboard" />;
-    } else {
-      return <Redirect to="/user/dashboard" />;
+    if (redirectToReferrer) {
+      if (isAuthenticated() && isAuthenticated().role === "admin") {
+        return <Redirect to="/admin/dashboard" />;
+      } else {
+        return <Redirect to="/user/dashboard" />;
+      }
     }
-  }
+    if (isAuthenticated()) {
+      return <Redirect to="/" />;
+    }
+  };
+
   return (
     <Layout title="Signin Page" description="Signin to Laravel React E-commerce App" className="container col-md-8 offset-md-2">
       {showSuccess()}
       {signinForm()}
+      {redirectUser()}
     </Layout>
   );
 };
