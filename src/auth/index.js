@@ -1,4 +1,5 @@
 import { API } from "../config";
+import { jwtDecode } from "jwt-decode";
 
 export const signup = (userObj) => {
   return fetch(`${API}/signup`, {
@@ -69,8 +70,16 @@ export const isAuthenticated = () => {
     return false;
   }
 
-  if (localStorage.getItem('jwt')) {
-    return true;
+  const token = localStorage.getItem('jwt');
+
+  if (token) {
+    const decodedToken = jwtDecode(token); // Assuming you are using a JWT decoding library
+    return {
+      id: decodedToken.id,
+      name: decodedToken.name,
+      email: decodedToken.email,
+      role: decodedToken.role,
+    };
   } else {
     return false;
   }

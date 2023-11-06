@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import Layout from "../core/Layout";
 import { Link, Redirect } from "react-router-dom";
-import { signin, authenticate } from "../auth";
+import { signin, authenticate, isAuthenticated } from "../auth";
 
 const Signin = () => {
   const [values, setValues] = useState({
-    email: 'bugokokydo@mailinator.com',
-    password: 'Pa$$w0rd!',
+    email: 'user@user.com',
+    password: '123456',
     errors: {
       email: '',
       password: '',
@@ -125,7 +125,14 @@ const Signin = () => {
     </div>
   );
   if (redirectToReferrer) {
-    return <Redirect to="/" />;
+    // check user is authenticated
+    const authenticated = isAuthenticated();
+    const { role } = isAuthenticated();
+    if (authenticated && role === "admin") {
+      return <Redirect to="/admin/dashboard" />;
+    } else {
+      return <Redirect to="/user/dashboard" />;
+    }
   }
   return (
     <Layout title="Signin Page" description="Signin to Laravel React E-commerce App" className="container col-md-8 offset-md-2">
